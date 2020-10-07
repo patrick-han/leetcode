@@ -5,6 +5,7 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    # Recrusive Solution
     def __init__(self):
         self.d = {} # Memoization for the depth calculations
         
@@ -24,3 +25,28 @@ class Solution:
         
         offByOneOrLess = abs(self.maxDepth(root.left) - self.maxDepth(root.right)) <= 1
         return offByOneOrLess and self.isBalanced(root.left) and self.isBalanced(root.right)
+
+
+
+    # Iterative solution
+    def isBalancedIter(self, root: TreeNode) -> bool:
+        # DFS, postorder
+        height_dict = {None:0} # Place this in the dict for when we reach a leaf node, we want to say we know the height of the None "branches"
+        stack = [root]
+        while stack:
+            cur = stack.pop()
+            if cur:
+                if cur.left in height_dict and cur.right in height_dict:
+                    left_height = height_dict[cur.left]
+                    right_height = height_dict[cur.right]
+                    if abs(left_height - right_height) > 1: # If the height differences of the left and right branches are > 1
+                        return False
+                    else:
+                        height_dict[cur] = max(left_height, right_height) + 1 # Store the max depth of the current node taking the max of left,right branches
+                else:
+                    # Reach here if we haven't calculated the height for one of the branches
+                    # Post order is: left->right->root so left goes on the the top of the stack
+                    stack.append(cur)
+                    stack.append(cur.right)
+                    stack.append(cur.left)
+        return True
