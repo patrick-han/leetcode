@@ -8,11 +8,11 @@ class Solution:
     # def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
     def sortedArrayToBST(self, nums) -> TreeNode:
         def buildSubTree(left, right):
-            print("L,R : " + str(left) + " " + str(right))
+            # print("L,R : " + str(left) + " " + str(right))
             if (left > right): # When we try to build a sub tree for a leaf node
                 return None
             mid = (left + right) // 2
-            print("mid: " + str(mid))
+            # print("mid: " + str(mid))
             midNode = TreeNode(nums[mid]) # The middle node of the sub array is always > left and <= right since we've sorted the array
             midNode.left = buildSubTree(left, mid - 1)
             midNode.right = buildSubTree(mid + 1, right)
@@ -25,9 +25,19 @@ def inOrderPrint(root):
         print(root.val)
         inOrderPrint(root.right)
 
+def preOrderPrint(root):
+    if (root is not None):
+        print(root.val)
+        preOrderPrint(root.left)
+        preOrderPrint(root.right)
+
 
 solver = Solution()
 
 case1 = [-10,-3,0,5,9]
-res = solver.sortedArrayToBST(case1)
-inOrderPrint(res)
+res1 = solver.sortedArrayToBST(case1)
+
+case2 = [1,2,3,4,5]
+res2 = solver.sortedArrayToBST(case2)
+# inOrderPrint(res2)
+preOrderPrint(res2)
