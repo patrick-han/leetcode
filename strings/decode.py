@@ -35,16 +35,16 @@ def decodeMemo(s):
         if (ptr_idx >= len(s)): # BASE CASE: If the pointer moves past the entire string, we're done
             return 1
 
-        if ((s, ptr_idx) not in ht): # If we haven't cached the answer yet
+        if (ptr_idx not in ht): # If we haven't cached the answer yet
 
             curr_sum = 0
             if ((int(s[ptr_idx:ptr_idx + 2]) <= 26) and ((ptr_idx + 2) <= len(s))): # Increment pointer by 2
                 curr_sum += dec(s, ptr_idx + 2)
             curr_sum += dec(s, ptr_idx + 1) # Increment pointer by 1
 
-            ht[(s, ptr_idx)] = curr_sum # Memoize the answer
+            ht[ptr_idx] = curr_sum # Memoize the answer
         
-        return ht[(s, ptr_idx)]
+        return ht[ptr_idx]
     return dec(s, 0)
 
 print(decodeMemo(testcase1))
